@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основи якості ПЗ та його моделі</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-size: 0.8em;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .formula {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 15px 0;
+            border: 2px solid #667eea;
+            font-size: 1.2em;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd89b 0%, #19547b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .model-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .model-card {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .model-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .model-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric-item {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .metric-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        .cmmi-levels {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .level {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s;
+        }
+
+        .level:hover {
+            transform: translateX(10px);
+        }
+
+        .level-number {
+            font-size: 2em;
+            font-weight: bold;
+            background: white;
+            color: #667eea;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f5f7fa;
+        }
+
+        .iso-characteristics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .characteristic {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .characteristic-title {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .characteristic ul {
+            font-size: 0.95em;
+        }
+
+        .characteristic li:before {
+            content: "•";
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <h1>Основи якості ПЗ та його моделі</h1>
+                <p class="subtitle">Метрики та стандарти якості</p>
+                <div style="margin-top: 40px; font-size: 1.2em; color: #666;">
+                    <p><strong>Курс:</strong> Надійність та якість програмного забезпечення комп'ютерних систем</p>
+                    <p style="margin-top: 15px;"><strong>Модуль 1:</strong> Вступ до надійності та якості ПЗ</p>
+                    <p style="margin-top: 15px;"><strong>Рівень:</strong> Магістратура</p>
+                    <p style="margin-top: 15px;"><strong>Спеціальність:</strong> Комп'ютерні науки</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()" disabled>← Попередній</button>
+                <span class="slide-counter"><span id="current">1</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Мета та завдання -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Мета та завдання лекції</h2>
+            </div>
+            <div class="content">
+                <div class="box">
+                    <h4>🎯 Мета</h4>
+                    <p>Сформувати системне розуміння якості програмного забезпечення, ознайомити студентів з основними моделями якості, метриками та міжнародними стандартами.</p>
+                </div>
+                <h3>Завдання:</h3>
+                <ul>
+                    <li>Засвоїти базові поняття якості, надійності та безпеки ПЗ</li>
+                    <li>Вивчити еволюцію моделей якості ПЗ</li>
+                    <li>Ознайомитися з основними метриками якості</li>
+                    <li>Дослідити сучасні стандарти якості ПЗ</li>
+                </ul>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">2</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Основні поняття -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Основні поняття</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Якість ПЗ</h4>
+                        <p>Ступінь відповідності програмної системи встановленим та неявним потребам зацікавлених сторін, що визначає її цінність.</p>
+                    </div>
+                    <div class="box">
+                        <h4>Надійність ПЗ</h4>
+                        <p>Ймовірність безвідмовної роботи програми протягом заданого проміжку часу в заданих умовах експлуатації.</p>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <h4>Безпека ПЗ (CIA Triad)</h4>
+                    <ul style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px;">
+                        <li><strong>Конфіденційність</strong> - захист від несанкціонованого доступу</li>
+                        <li><strong>Цілісність</strong> - захист від несанкціонованих змін</li>
+                        <li><strong>Доступність</strong> - забезпечення доступу для авторизованих користувачів</li>
+                    </ul>
+                </div>
+                <div class="formula">
+                    Помилка → Дефект → Збій → Відмова
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">3</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Еволюція моделей якості -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Еволюція моделей якості ПЗ</h2>
+            </div>
+            <div class="content">
+                <div class="model-comparison">
+                    <div class="model-card">
+                        <h4>McCall (1977)</h4>
+                        <p style="color: #666; margin-top: 10px;">Перша ієрархічна модель з трьома групами характеристик</p>
+                        <div style="margin-top: 15px; font-size: 0.9em; text-align: left;">
+                            <strong>11 характеристик:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Експлуатація</li>
+                                <li>Модифікація</li>
+                                <li>Перехід</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="model-card">
+                        <h4>Boehm (1978)</h4>
+                        <p style="color: #666; margin-top: 10px;">Розширена модель з автоматизованими метриками</p>
+                        <div style="margin-top: 15px; font-size: 0.9em; text-align: left;">
+                            <strong>Особливості:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Більша деталізація</li>
+                                <li>Кількісні метрики</li>
+                                <li>Вимірюваність</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="model-card">
+                        <h4>ISO 9126 (1991)</h4>
+                        <p style="color: #666; margin-top: 10px;">Міжнародний стандарт якості</p>
+                        <div style="margin-top: 15px; font-size: 0.9em; text-align: left;">
+                            <strong>6 характеристик:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Функціональність</li>
+                                <li>Надійність</li>
+                                <li>Зручність</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 30px; text-align: center;">
+                    <h4>⬇️ ISO/IEC 25010 (2011) — Сучасний стандарт ⬇️</h4>
+                    <p style="margin-top: 10px;">8 характеристик + модель якості використання</p>
+                    <p style="margin-top: 10px; font-weight: bold; color: #764ba2;">+ Безпека як окрема характеристика!</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">4</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Модель McCall -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Модель якості McCall (1977)</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="box">
+                        <h4>Експлуатація продукту</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Коректність</li>
+                            <li>Надійність</li>
+                            <li>Ефективність</li>
+                            <li>Цілісність</li>
+                            <li>Зручність</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>Модифікація продукту</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Супроводжуваність</li>
+                            <li>Гнучкість</li>
+                            <li>Тестованість</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>Перехід продукту</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Переносимість</li>
+                            <li>Повторна використовуваність</li>
+                            <li>Сумісність</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <h4>💡 Особливості моделі</h4>
+                    <ul>
+                        <li>Перша комплексна ієрархічна модель</li>
+                        <li>Розроблена для військово-повітряних сил США</li>
+                        <li>Кожна характеристика оцінюється через набір метрик</li>
+                        <li>Фокус на три основні аспекти життєвого циклу ПЗ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">5</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 6: ISO/IEC 25010 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>ISO/IEC 25010 — Сучасний стандарт</h2>
+            </div>
+            <div class="content">
+                <h3>8 характеристик якості продукту:</h3>
+                <div class="iso-characteristics">
+                    <div class="characteristic">
+                        <div class="characteristic-title">1. Функціональна придатність</div>
+                        <ul>
+                            <li>Функціональна повнота</li>
+                            <li>Функціональна коректність</li>
+                            <li>Функціональна відповідність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">2. Ефективність виконання</div>
+                        <ul>
+                            <li>Часова поведінка</li>
+                            <li>Використання ресурсів</li>
+                            <li>Ємність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">3. Сумісність</div>
+                        <ul>
+                            <li>Співіснування</li>
+                            <li>Сумісність взаємодії</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">4. Зручність використання</div>
+                        <ul>
+                            <li>Розпізнаваність</li>
+                            <li>Простота навчання</li>
+                            <li>Естетика інтерфейсу</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">5. Надійність</div>
+                        <ul>
+                            <li>Зрілість</li>
+                            <li>Доступність</li>
+                            <li>Відновлюваність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">6. Безпека ⭐ НОВА!</div>
+                        <ul>
+                            <li>Конфіденційність</li>
+                            <li>Цілісність</li>
+                            <li>Автентичність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">7. Супроводжуваність</div>
+                        <ul>
+                            <li>Модульність</li>
+                            <li>Аналізованість</li>
+                            <li>Тестованість</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">8. Переносимість</div>
+                        <ul>
+                            <li>Адаптованість</li>
+                            <li>Встановлюваність</li>
+                            <li>Замінність</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">6</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 7: Класифікація метрик -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Класифікація метрик якості</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>За об'єктом вимірювання</h4>
+                        <ul>
+                            <li><strong>Метрики продукту</strong> — характеристики коду (складність, розмір)</li>
+                            <li><strong>Метрики процесу</strong> — ефективність розробки (швидкість, продуктивність)</li>
+                            <li><strong>Метрики проєкту</strong> — управлінські показники (вартість, термін)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>За способом отримання</h4>
+                        <ul>
+                            <li><strong>Прямі метрики</strong> — безпосереднє вимірювання (LOC, кількість дефектів)</li>
+                            <li><strong>Непрямі метрики</strong> — розраховані показники (щільність дефектів, складність)</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 style="margin-top: 30px;">Основні групи метрик:</h3>
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <strong>📏 Метрики розміру</strong>
+                        LOC, SLOC, Function Points
+                    </div>
+                    <div class="metric-item">
+                        <strong>🔀 Метрики складності</strong>
+                        Цикломатична складність, Halstead
+                    </div>
+                    <div class="metric-item">
+                        <strong>🔗 Метрики структури</strong>
+                        Зв'язаність, зчеплення
+                    </div>
+                    <div class="metric-item">
+                        <strong>⚡ Метрики надійності</strong>
+                        MTTF, MTBF, щільність дефектів
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">7</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Цикломатична складність -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Цикломатична складність McCabe</h2>
+            </div>
+            <div class="content">
+                <div class="box">
+                    <h4>Визначення</h4>
+                    <p>Кількість лінійно незалежних шляхів через програму (граф потоку керування)</p>
+                </div>
+                <h3>Формули розрахунку:</h3>
+                <div class="formula">
+                    V(G) = E - N + 2P
+                </div>
+                <p style="text-align: center; color: #666; margin-top: 10px;">
+                    де E — ребра, N — вершини, P — компоненти зв'язності
+                </p>
+                <div class="formula">
+                    V(G) = π + 1
+                </div>
+                <p style="text-align: center; color: #666; margin-top: 10px;">
+                    де π — кількість предикатів (умов розгалуження)
+                </p>
+                <h3>Інтерпретація значень:</h3>
+                <table>
+                    <tr>
+                        <th>Значення V(G)</th>
+                        <th>Оцінка складності</th>
+                        <th>Ризик</th>
+                    </tr>
+                    <tr>
+                        <td>1-10</td>
+                        <td>Простий код</td>
+                        <td style="color: green; font-weight: bold;">Низький</td>
+                    </tr>
+                    <tr>
+                        <td>11-20</td>
+                        <td>Помірна складність</td>
+                        <td style="color: orange; font-weight: bold;">Середній</td>
+                    </tr>
+                    <tr>
+                        <td>21-50</td>
+                        <td>Складний код</td>
+                        <td style="color: red; font-weight: bold;">Високий</td>
+                    </tr>
+                    <tr>
+                        <td>>50</td>
+                        <td>Дуже складний</td>
+                        <td style="color: darkred; font-weight: bold;">Критичний</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">8</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: Зв'язаність та зчеплення -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Зв'язаність та зчеплення модулів</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Зв'язаність (Coupling) ⬇️ Менше = Краще</h4>
+                        <p style="margin-bottom: 15px;"><em>Ступінь взаємозалежності між модулями</em></p>
+                        <strong>Види (від гіршого до кращого):</strong>
+                        <ol style="list-style: decimal; padding-left: 20px; margin-top: 10px;">
+                            <li>Змістова зв'язаність</li>
+                            <li>Зовнішня зв'язаність</li>
+                            <li>Контрольна зв'язаність</li>
+                            <li>За даними</li>
+                            <li>За повідомленням ✓</li>
+                        </ol>
+                        <div style="margin-top: 15px; padding: 10px; background: white; border-radius: 8px;">
+                            <strong>Метрики:</strong>
+                            <ul style="font-size: 0.9em;">
+                                <li>CBO (Coupling Between Objects)</li>
+                                <li>RFC (Response For a Class)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h4>Зчеплення (Cohesion) ⬆️ Більше = Краще</h4>
+                        <p style="margin-bottom: 15px;"><em>Ступінь зв'язку елементів всередині модуля</em></p>
+                        <strong>Види (від гіршого до кращого):</strong>
+                        <ol style="list-style: decimal; padding-left: 20px; margin-top: 10px;">
+                            <li>Випадкове зчеплення</li>
+                            <li>Логічне зчеплення</li>
+                            <li>Часове зчеплення</li>
+                            <li>Процедурне зчеплення</li>
+                            <li>Комунікативне зчеплення</li>
+                            <li>Послідовне зчеплення</li>
+                            <li>Функціональне зчеплення ✓</li>
+                        </ol>
+                        <div style="margin-top: 15px; padding: 10px; background: white; border-radius: 8px;">
+                            <strong>Метрика:</strong>
+                            <ul style="font-size: 0.9em;">
+                                <li>LCOM (Lack of Cohesion of Methods)</li>
+                                <li>Низький LCOM = високе зчеплення</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 20px; text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h4 style="color: white;">🎯 Ідеальна архітектура</h4>
+                    <p style="font-size: 1.3em; margin-top: 10px;">Низька зв'язаність + Високе зчеплення</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">9</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 10: Метрики надійності -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Метрики надійності ПЗ</h2>
+            </div>
+            <div class="content">
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <strong>Щільність дефектів (DD)</strong>
+                        <div class="formula" style="margin-top: 10px;">
+                            DD = Кількість дефектів / KLOC
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Типові значення: 1-25 дефектів/KLOC</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>MTTF (Mean Time To Failure)</strong>
+                        <div class="formula" style="margin-top: 10px;">
+                            MTTF = Загальний час / Кількість відмов
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Середній час до відмови</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>MTBF (Mean Time Between Failures)</strong>
+                        <div class="formula" style="margin-top: 10px;">
+                            MTBF = MTTF + MTTR
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">MTTR — час відновлення</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>Коефіцієнт готовності</strong>
+                        <div class="formula" style="margin-top: 10px;">
+                            A = MTTF / (MTTF + MTTR) × 100%
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Відсоток часу працездатності</p>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 30px;">
+                    <h4>📊 Приклад розрахунку</h4>
+                    <p><strong>Дано:</strong> Модуль 850 LOC, 4 дефекти, 2000 год роботи, 2 відмови</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                        <div>
+                            <strong>DD =</strong> 4 / 0.85 = <span style="color: #667eea; font-weight: bold;">4.7 дефектів/KLOC</span>
+                        </div>
+                        <div>
+                            <strong>MTTF =</strong> 2000 / 2 = <span style="color: #667eea; font-weight: bold;">1000 годин</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">10</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 11: Code Coverage -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Метрики покриття коду (Code Coverage)</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Statement Coverage</h4>
+                        <p>Відсоток виконаних інструкцій</p>
+                        <div class="formula">
+                            SC = (Виконані / Загальні) × 100%
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Найпростіша метрика покриття</p>
+                    </div>
+                    <div class="box">
+                        <h4>Branch Coverage</h4>
+                        <p>Відсоток перевірених гілок</p>
+                        <div class="formula">
+                            BC = (Перевірені гілки / Всі гілки) × 100%
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Перевіряє умови if/else</p>
+                    </div>
+                </div>
+                <div class="two-columns" style="margin-top: 20px;">
+                    <div class="box">
+                        <h4>Path Coverage</h4>
+                        <p>Відсоток пройдених шляхів</p>
+                        <div class="formula">
+                            PC = (Пройдені шляхи / Всі шляхи) × 100%
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Найсуворіша метрика</p>
+                    </div>
+                    <div class="box">
+                        <h4>Condition Coverage</h4>
+                        <p>Відсоток перевірених умов</p>
+                        <div class="formula">
+                            CC = (Перевірені умови / Всі умови) × 100%
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Перевіряє true/false для кожної умови</p>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h4 style="color: white;">📈 Рекомендовані рівні покриття</h4>
+                    <ul style="margin-top: 10px;">
+                        <li>Критичні системи: <strong>90-100%</strong></li>
+                        <li>Комерційні додатки: <strong>70-85%</strong></li>
+                        <li>Внутрішні інструменти: <strong>60-70%</strong></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">11</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: Технічний борг -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Технічний борг (Technical Debt)</h2>
+            </div>
+            <div class="content">
+                <div class="box">
+                    <h4>Визначення</h4>
+                    <p>Додаткові зусилля, необхідні для виправлення субоптимальних рішень у коді.</p>
+                </div>
+                <h3>Розрахунок технічного боргу:</h3>
+                <div class="formula">
+                    TD = Час на виправлення × Вартість години розробника
+                </div>
+                <div class="formula" style="margin-top: 20px;">
+                    TDR = Технічний борг / Вартість розробки
+                </div>
+                <p style="text-align: center; margin-top: 10px; color: #666;">Коефіцієнт технічного боргу (рекомендовано ≤ 5%)</p>
+                
+                <div class="two-columns" style="margin-top: 30px;">
+                    <div class="box" style="background: #ffe0e0;">
+                        <h4 style="color: #c62828;">⚠️ Причини виникнення</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Тиск дедлайнів</li>
+                            <li>Недостатня документація</li>
+                            <li>Відсутність рефакторингу</li>
+                            <li>Застарілі технології</li>
+                            <li>Неоптимальні рішення</li>
+                        </ul>
+                    </div>
+                    <div class="box" style="background: #e0ffe0;">
+                        <h4 style="color: #2e7d32;">✓ Методи зменшення</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Регулярний рефакторинг</li>
+                            <li>Code review</li>
+                            <li>Автоматизоване тестування</li>
+                            <li>Дотримання стандартів</li>
+                            <li>Планування часу на якість</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">12</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 13: ISO/IEC 25000 SQuaRE -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Стандарт ISO/IEC 25000 (SQuaRE)</h2>
+            </div>
+            <div class="content">
+                <div class="box">
+                    <h4>Software Product Quality Requirements and Evaluation</h4>
+                    <p style="margin-top: 10px;">Комплексний набір стандартів для вимог та оцінювання якості ПЗ</p>
+                </div>
+                <h3>Структура сімейства SQuaRE:</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
+                    <div class="box" style="border-left-color: #667eea;">
+                        <strong style="color: #667eea;">ISO/IEC 2500n</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px;">Управління якістю</p>
+                    </div>
+                    <div class="box" style="border-left-color: #764ba2;">
+                        <strong style="color: #764ba2;">ISO/IEC 2501n</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px;">Модель якості (25010, 25012)</p>
+                    </div>
+                    <div class="box" style="border-left-color: #f093fb;">
+                        <strong style="color: #f093fb;">ISO/IEC 2502n</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px;">Вимірювання якості</p>
+                    </div>
+                    <div class="box" style="border-left-color: #4facfe;">
+                        <strong style="color: #4facfe;">ISO/IEC 2503n</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px;">Вимоги до якості</p>
+                    </div>
+                    <div class="box" style="border-left-color: #43e97b;">
+                        <strong style="color: #43e97b;">ISO/IEC 2504n</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px;">Оцінювання якості</p>
+                    </div>
+                    <div class="box" style="border-left-color: #fa709a;">
+                        <strong style="color: #fa709a;">ISO/IEC 2505n</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px;">Розширення SQuaRE</p>
+                    </div>
+                </div>
+                <div class="two-columns" style="margin-top: 30px;">
+                    <div class="box">
+                        <h4>ISO/IEC 25010</h4>
+                        <p style="font-size: 0.95em;">Моделі якості продукту та якості використання</p>
+                    </div>
+                    <div class="box">
+                        <h4>ISO/IEC 25012</h4>
+                        <p style="font-size: 0.95em;">Модель якості даних</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">13</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 14: CMMI Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CMMI — Capability Maturity Model Integration</h2>
+            </div>
+            <div class="content">
+                <div class="box">
+                    <h4>Мета CMMI</h4>
+                    <p>Оцінка та покращення процесів розробки ПЗ на організаційному рівні</p>
+                </div>
+                <h3>П'ять рівнів зрілості:</h3>
+                <div class="cmmi-levels">
+                    <div class="level" style="opacity: 0.7;">
+                        <div class="level-number">1</div>
+                        <div>
+                            <strong style="font-size: 1.2em;">Початковий (Initial)</strong>
+                            <p style="margin-top: 5px; font-size: 0.9em;">Хаотичні процеси, непередбачувані результати</p>
+                        </div>
+                    </div>
+                    <div class="level" style="opacity: 0.8;">
+                        <div class="level-number">2</div>
+                        <div>
+                            <strong style="font-size: 1.2em;">Керований (Managed)</strong>
+                            <p style="margin-top: 5px; font-size: 0.9em;">Плановані проєкти, процеси повторюються</p>
+                        </div>
+                    </div>
+                    <div class="level" style="opacity: 0.85;">
+                        <div class="level-number">3</div>
+                        <div>
+                            <strong style="font-size: 1.2em;">Визначений (Defined)</strong>
+                            <p style="margin-top: 5px; font-size: 0.9em;">Стандартизовані процеси, проактивне управління</p>
+                        </div>
+                    </div>
+                    <div class="level" style="opacity: 0.9;">
+                        <div class="level-number">4</div>
+                        <div>
+                            <strong style="font-size: 1.2em;">Кількісно керований (Quantitatively Managed)</strong>
+                            <p style="margin-top: 5px; font-size: 0.9em;">Процеси вимірюються, прогнозовані результати</p>
+                        </div>
+                    </div>
+                    <div class="level">
+                        <div class="level-number">5</div>
+                        <div>
+                            <strong style="font-size: 1.2em;">Оптимізований (Optimizing)</strong>
+                            <p style="margin-top: 5px; font-size: 0.9em;">Постійне покращення, організаційне навчання</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">14</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 15: CMMI Process Areas -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CMMI — Області процесів</h2>
+            </div>
+            <div class="content">
+                <h3>Ключові області процесів (Process Areas):</h3>
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <strong>REQM</strong>
+                        Управління вимогами (Requirements Management)
+                    </div>
+                    <div class="metric-item">
+                        <strong>PP</strong>
+                        Планування проєктів (Project Planning)
+                    </div>
+                    <div class="metric-item">
+                        <strong>PPQA</strong>
+                        Забезпечення якості процесів і продуктів
+                    </div>
+                    <div class="metric-item">
+                        <strong>CM</strong>
+                        Управління конфігурацією (Configuration Management)
+                    </div>
+                    <div class="metric-item">
+                        <strong>RSKM</strong>
+                        Управління ризиками (Risk Management)
+                    </div>
+                    <div class="metric-item">
+                        <strong>VER</strong>
+                        Верифікація (Verification)
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 30px;">
+                    <h4>💡 Переваги впровадження CMMI</h4>
+                    <div class="two-columns" style="margin-top: 15px;">
+                        <ul>
+                            <li>Покращення якості продуктів</li>
+                            <li>Зменшення витрат на розробку</li>
+                            <li>Підвищення передбачуваності проєктів</li>
+                        </ul>
+                        <ul>
+                            <li>Більша задоволеність клієнтів</li>
+                            <li>Зменшення кількості дефектів</li>
+                            <li>Конкурентна перевага на ринку</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">15</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 16: Інші стандарти -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Інші важливі стандарти якості</h2>
+            </div>
+            <div class="content">
+                <h3>Стандарти IEEE:</h3>
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <strong>IEEE 730</strong>
+                        Software Quality Assurance Plans
+                        <p style="font-size: 0.9em; margin-top: 5px; color: #666;">Планування забезпечення якості</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>IEEE 829</strong>
+                        Software Test Documentation
+                        <p style="font-size: 0.9em; margin-top: 5px; color: #666;">Документація процесу тестування</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>IEEE 1012</strong>
+                        Software V&V
+                        <p style="font-size: 0.9em; margin-top: 5px; color: #666;">Верифікація та валідація ПЗ</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>ISO 9001</strong>
+                        Quality Management System
+                        <p style="font-size: 0.9em; margin-top: 5px; color: #666;">Система менеджменту якості</p>
+                    </div>
+                </div>
+                <h3 style="margin-top: 30px;">Галузеві стандарти:</h3>
+                <div class="two-columns">
+                    <div class="box" style="background: #e3f2fd;">
+                        <h4 style="color: #1976d2;">✈️ DO-178C</h4>
+                        <p>Стандарт для авіаційного ПЗ</p>
+                        <ul style="margin-top: 10px; font-size: 0.9em;">
+                            <li>Критичні системи літаків</li>
+                            <li>Суворі вимоги до безпеки</li>
+                            <li>Детальна документація</li>
+                        </ul>
+                    </div>
+                    <div class="box" style="background: #fff3e0;">
+                        <h4 style="color: #f57c00;">⚡ IEC 61508</h4>
+                        <p>Функціональна безпека систем</p>
+                        <ul style="margin-top: 10px; font-size: 0.9em;">
+                            <li>Промислові системи</li>
+                            <li>Рівні цілісності безпеки (SIL)</li>
+                            <li>Аналіз ризиків</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">16</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 17: Інструменти статичного аналізу -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Інструменти статичного аналізу коду</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="box">
+                        <h4>☕ Java</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li><strong>SonarQube</strong> — комплексний аналіз</li>
+                            <li><strong>PMD</strong> — виявлення проблем коду</li>
+                            <li><strong>Checkstyle</strong> — перевірка стилю</li>
+                            <li><strong>SpotBugs</strong> — пошук багів</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>🐍 Python</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li><strong>Pylint</strong> — стиль та помилки</li>
+                            <li><strong>Flake8</strong> — PEP8 перевірка</li>
+                            <li><strong>Bandit</strong> — аналіз безпеки</li>
+                            <li><strong>mypy</strong> — статична типізація</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>⚙️ C/C++</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li><strong>Cppcheck</strong> — статичний аналіз</li>
+                            <li><strong>Clang Analyzer</strong> — компілятор LLVM</li>
+                            <li><strong>PVS-Studio</strong> — комерційний аналізатор</li>
+                            <li><strong>Coverity</strong> — enterprise рішення</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>📜 JavaScript</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li><strong>ESLint</strong> — стандарт індустрії</li>
+                            <li><strong>JSHint</strong> — виявлення помилок</li>
+                            <li><strong>SonarJS</strong> — якість JS коду</li>
+                            <li><strong>TSLint</strong> — для TypeScript</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h4 style="color: white;">🔧 Універсальні платформи</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+                        <div>
+                            <strong>SonarQube</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Багатомовна платформа</p>
+                        </div>
+                        <div>
+                            <strong>Code Climate</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Cloud аналіз якості</p>
+                        </div>
+                        <div>
+                            <strong>Understand</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Аналіз архітектури</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">17</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 18: Практичний приклад -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Практичний приклад оцінки якості</h2>
+            </div>
+            <div class="content">
+                <div class="box" style="background: #e8eaf6;">
+                    <h4 style="color: #3f51b5;">Модуль обробки замовлень</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+                        <div><strong>LOC:</strong> 850 рядків</div>
+                        <div><strong>Функції:</strong> 12</div>
+                        <div><strong>V(G):</strong> 28</div>
+                        <div><strong>Дефекти:</strong> 4</div>
+                        <div><strong>Час роботи:</strong> 2000 год</div>
+                        <div><strong>Відмови:</strong> 2</div>
+                    </div>
+                </div>
+                
+                <h3>Розрахунки та висновки:</h3>
+                <div class="metric-grid">
+                    <div class="metric-item" style="background: #ffebee;">
+                        <strong>Щільність дефектів</strong>
+                        <div class="formula" style="margin: 10px 0;">
+                            DD = 4 / 0.85 = 4.7 дефектів/KLOC
+                        </div>
+                        <p style="color: #c62828; font-weight: bold;">⚠️ Вище норми (1-3)</p>
+                    </div>
+                    <div class="metric-item" style="background: #fff3e0;">
+                        <strong>MTTF</strong>
+                        <div class="formula" style="margin: 10px 0;">
+                            MTTF = 2000 / 2 = 1000 годин
+                        </div>
+                        <p style="color: #f57c00; font-weight: bold;">⚠️ Потребує покращення</p>
+                    </div>
+                    <div class="metric-item" style="background: #ffebee;">
+                        <strong>Цикломатична складність</strong>
+                        <div class="formula" style="margin: 10px 0;">
+                            V(G) = 28
+                        </div>
+                        <p style="color: #c62828; font-weight: bold;">⚠️ Складний код (21-50)</p>
+                    </div>
+                    <div class="metric-item" style="background: #e3f2fd;">
+                        <strong>Відповідність ISO 25010</strong>
+                        <p style="margin-top: 10px; color: #1976d2;">Низька супроводжуваність</p>
+                        <p style="margin-top: 5px; color: #1976d2;">Потрібне покращення тестованості</p>
+                    </div>
+                </div>
+                
+                <div class="box" style="margin-top: 20px; background: #e8f5e9;">
+                    <h4 style="color: #2e7d32;">✅ Рекомендації</h4>
+                    <ul>
+                        <li>Розбити складні функції на менші модулі (V(G) < 20)</li>
+                        <li>Збільшити покриття тестами</li>
+                        <li>Провести рефакторинг для зменщення зв'язаності</li>
+                        <li>Додати документацію для покращення супроводжуваності</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">18</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 19: Висновки -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Висновки</h2>
+            </div>
+            <div class="content">
+                <div class="box" style="margin-bottom: 20px;">
+                    <h4>🎯 Ключові положення</h4>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="box">
+                        <strong style="color: #667eea; font-size: 1.1em;">1. Багатовимірність якості</strong>
+                        <p style="margin-top: 8px;">Якість ПЗ — це комплексна характеристика, що еволюціонувала від простих моделей McCall до сучасних стандартів ISO/IEC 25010.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <strong style="color: #667eea; font-size: 1.1em;">2. Структурований підхід</strong>
+                        <p style="margin-top: 8px;">Моделі якості (McCall, Boehm, ISO) забезпечують систематичний підхід до оцінювання якості ПЗ на всіх етапах розробки.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <strong style="color: #667eea; font-size: 1.1em;">3. Безпека як пріоритет</strong>
+                        <p style="margin-top: 8px;">ISO/IEC 25010 включає безпеку як окрему характеристику якості, підкреслюючи її критичну важливість у сучасному світі.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <strong style="color: #667eea; font-size: 1.1em;">4. Вимірюваність якості</strong>
+                        <p style="margin-top: 8px;">Метрики якості (складність, зв'язаність, надійність) дозволяють кількісно оцінити стан ПЗ та приймати обґрунтовані рішення.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <strong style="color: #667eea; font-size: 1.1em;">5. Процесна зрілість</strong>
+                        <p style="margin-top: 8px;">CMMI забезпечує фреймворк для систематичного покращення процесів розробки на організаційному рівні.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <strong style="color: #667eea; font-size: 1.1em;">6. Автоматизація обов'язкова</strong>
+                        <p style="margin-top: 8px;">Використання інструментів статичного аналізу та автоматизованого тестування є необхідною практикою сучасної розробки.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">19</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 20: Питання та література -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Контрольні питання та література</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div>
+                        <h3>Питання для самоперевірки:</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li>Різниця між якістю, надійністю та безпекою ПЗ?</li>
+                            <li>Порівняння моделей McCall та Boehm</li>
+                            <li>Нові характеристики ISO/IEC 25010</li>
+                            <li>Що вимірює цикломатична складність?</li>
+                            <li>Різниця між зв'язаністю та зчепленням</li>
+                            <li>П'ять рівнів зрілості CMMI</li>
+                            <li>Розрахунок щільності дефектів</li>
+                            <li>Значення метрики MTTF</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Рекомендована література:</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li><strong>ISO/IEC 25010:2011</strong> — SQuaRE стандарт</li>
+                            <li>Pressman R. — Software Engineering (9th ed.)</li>
+                            <li>Sommerville I. — Software Engineering (10th ed.)</li>
+                            <li><strong>CMMI</strong> for Development, Version 2.0</li>
+                            <li>Galin D. — Software Quality: Concepts and Practice</li>
+                            <li>IEEE Standards Collection</li>
+                        </ul>
+                        
+                        <div class="box" style="margin-top: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <h4 style="color: white;">📚 Підготовка до ЛР</h4>
+                            <p style="font-size: 0.9em; margin-top: 10px;"><strong>ЛР 1:</strong> Аналіз ISO/IEC 25010 та CMMI</p>
+                            <p style="font-size: 0.9em; margin-top: 5px;"><strong>ЛР 2:</strong> Практичні метрики коду</p>
+                            <p style="font-size: 0.9em; margin-top: 5px;"><strong>ЛР 3:</strong> Статичний аналіз коду</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="box" style="margin-top: 20px; text-align: center; background: #f5f7fa;">
+                    <h4 style="color: #667eea; font-size: 1.5em;">Дякую за увагу! 🎓</h4>
+                    <p style="margin-top: 15px; font-size: 1.1em; color: #666;">
+                        <strong>Наступна лекція:</strong> Математичні моделі надійності ПЗ
+                    </p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="prevSlide()">← Попередній</button>
+                <span class="slide-counter"><span id="current">20</span> / <span id="total">20</span></span>
+                <button class="btn" onclick="nextSlide()" disabled>Наступний →</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 20;
+
+        function updateSlide() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index + 1 === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            // Update all slide counters
+            document.querySelectorAll('#current').forEach(el => {
+                el.textContent = currentSlide;
+            });
+            document.querySelectorAll('#total').forEach(el => {
+                el.textContent = totalSlides;
+            });
+
+            // Update button states
+            document.querySelectorAll('.navigation').forEach(nav => {
+                const prevBtn = nav.querySelector('button:first-child');
+                const nextBtn = nav.querySelector('button:last-child');
+                
+                if (prevBtn) {
+                    prevBtn.disabled = currentSlide === 1;
+                }
+                if (nextBtn) {
+                    nextBtn.disabled = currentSlide === totalSlides;
+                }
+            });
+
+            // Scroll to top of content
+            const activeSlide = document.querySelector('.slide.active');
+            if (activeSlide) {
+                const content = activeSlide.querySelector('.content');
+                if (content) {
+                    content.scrollTop = 0;
+                }
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 1;
+                updateSlide();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = totalSlides;
+                updateSlide();
+            }
+        });
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
+            
