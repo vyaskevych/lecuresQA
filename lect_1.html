@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основи якості ПЗ та його моделі</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Підключення Highlight.js для красивого форматування коду -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tomorrow-night-blue.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<body>
+    <div class="presentation-container">
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="content title-slide-content">
+                <h1>Основи якості ПЗ та його моделі</h1>
+                <p class="subtitle">Метрики та стандарти якості (Оновлено до ISO/IEC 25010:2023)</p>
+                <div class="metadata">
+                    <p><strong>Курс:</strong> Забезпечення надійності та якості ПЗ інформаційних систем</p>
+                    <p><strong>Спеціальність:</strong> 122 Комп'ютерні науки (Магістратура)</p>
+                    <p><strong>Викладач:</strong> доц. Кейт</p>
+                    <p>Київський столичний університет імені Бориса Грінченка</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" id="prevBtn" disabled>← Попередній</button>
+                <span class="slide-counter"><span class="current">1</span> / <span class="total">23</span></span>
+                <button class="btn" id="nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Структура курсу -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Структура курсу</h2>
+            </div>
+            <div class="content" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                <table class="data-table" style="font-size: 1.15em; text-align: center; margin-top: -50px;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center; width: 10%;">Семестр</th>
+                            <th style="text-align: center; width: 10%;">Кредитів</th>
+                            <th style="text-align: center; width: 10%;">Годин</th>
+                            <th style="text-align: center; width: 10%;">МК</th>
+                            <th style="text-align: center; width: 10%;">Лекцій</th>
+                            <th style="text-align: center; width: 15%;">Лабораторних<br>занять</th>
+                            <th style="text-align: center; width: 15%;">Самостійна<br>робота</th>
+                            <th style="text-align: center; width: 20%;">Форма семестрового<br>контролю</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1</strong></td>
+                            <td><strong>4</strong></td>
+                            <td><strong>120</strong></td>
+                            <td><strong>8</strong></td>
+                            <td><strong>8</strong></td>
+                            <td><strong>24</strong></td>
+                            <td><strong>50</strong></td>
+                            <td><strong>Екзамен (30)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">2</span> / <span class="total">24</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Мета та завдання -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Мета та завдання лекції</h2>
+            </div>
+            <div class="content">
+                <div class="box primary-box">
+                    <h4>🎯 Мета</h4>
+                    <p>Сформувати системне розуміння якості програмного забезпечення, ознайомити магістрантів з
+                        сучасними моделями якості, архітектурними метриками та міжнародними стандартами інженерії.</p>
+                </div>
+                <h3 class="section-title">Завдання:</h3>
+                <ul>
+                    <li>Засвоїти базову термінологію якості, надійності та безпеки ПЗ (ISTQB/IEEE).</li>
+                    <li>Дослідити еволюцію моделей від McCall до актуального ISO/IEC 25010:2023.</li>
+                    <li>Розібрати метрики коду (McCabe, Halstead, Coupling, Cohesion) на реальних прикладах.</li>
+                    <li>Ознайомитися з інструментарієм автоматизації (CI/CD, SAST, DAST).</li>
+                </ul>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">2</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Основні поняття -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Основні поняття та термінологія</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Якість ПЗ (ISO/IEC 25010)</h4>
+                        <p>Ступінь відповідності програмної системи встановленим та неявним потребам зацікавлених сторін
+                            під час експлуатації в заданих умовах.</p>
+                    </div>
+                    <div class="box">
+                        <h4>Надійність ПЗ</h4>
+                        <p>Ймовірність безвідмовної роботи програми протягом заданого проміжку часу. Включає
+                            відмовостійкість та відновлюваність.</p>
+                    </div>
+                </div>
+                <div class="box full-width-box">
+                    <h4>Ланцюжок виникнення проблем (ISTQB / IEEE)</h4>
+                    <div class="formula" style="font-size: 1.1em; padding: 15px;">
+                        Error (Помилка людини) ➔ Defect (Дефект у коді) ➔ Failure (Відмова системи)
+                    </div>
+                    <div class="light-blue-box tight-box" style="margin-top: 15px; border-radius: 8px; padding: 15px;">
+                        <h4 style="margin-bottom: 10px; color: #1976D2;">Приклад з e-commerce:</h4>
+                        <ul style="font-size: 0.9em;">
+                            <li><strong>Error:</strong> Втомлений розробник забув додати перевірку на від'ємне значення
+                                ціни.</li>
+                            <li><strong>Defect:</strong> У коді відсутня логіка
+                                <code>if (price < 0) throw Error;</code>. Баг «спить» у системі.
+                            </li>
+                            <li><strong>Failure:</strong> Користувач вводить -100 грн, система падає під час спроби
+                                провести транзакцію.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">3</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Еволюція моделей якості -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Еволюція моделей якості ПЗ</h2>
+            </div>
+            <div class="content">
+                <div class="model-comparison">
+                    <div class="model-card">
+                        <h4>McCall (1977)</h4>
+                        <p class="card-subtitle">Перша ієрархічна модель</p>
+                        <div class="card-details">
+                            <strong>3 рівні життєвого циклу:</strong>
+                            <ul>
+                                <li>Експлуатація</li>
+                                <li>Модифікація</li>
+                                <li>Перехід</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="model-card">
+                        <h4>Boehm (1978)</h4>
+                        <p class="card-subtitle">Модель з кількісними метриками</p>
+                        <div class="card-details">
+                            <strong>Особливості:</strong>
+                            <ul>
+                                <li>Висока деталізація</li>
+                                <li>Автоматизовані метрики</li>
+                                <li>Вимірюваність</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="model-card">
+                        <h4>ISO 25010:2011</h4>
+                        <p class="card-subtitle">Класичний стандарт SQuaRE</p>
+                        <div class="card-details">
+                            <strong>8 характеристик:</strong>
+                            <ul>
+                                <li>Додано "Безпеку"</li>
+                                <li>Розділено якість продукту та використання</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="box accent-box">
+                    <h4>⬇️ ISO/IEC 25010:2023 — Новітня редакція стандарту ⬇️</h4>
+                    <p>Розширено до <strong>9 характеристик</strong> для відповідності сучасним викликам (Cloud,
+                        Інклюзивність, AI).</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">4</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 6: Модель McCall -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Класика: Модель якості McCall (1977)</h2>
+            </div>
+            <div class="content">
+                <div class="three-columns">
+                    <div class="box">
+                        <h4>1. Експлуатація</h4>
+                        <ul>
+                            <li>Коректність</li>
+                            <li>Надійність</li>
+                            <li>Ефективність</li>
+                            <li>Цілісність</li>
+                            <li>Зручність</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>2. Модифікація</h4>
+                        <ul>
+                            <li>Супроводжуваність</li>
+                            <li>Гнучкість</li>
+                            <li>Тестованість</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>3. Перехід</h4>
+                        <ul>
+                            <li>Переносимість</li>
+                            <li>Повторна використовуваність</li>
+                            <li>Сумісність</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box full-width-box">
+                    <h4>💡 Історичне значення</h4>
+                    <ul>
+                        <li>Розроблена для військово-повітряних сил США (авіаційні системи).</li>
+                        <li>Вперше структурувала якість не як абстракцію, а як вимірювані фактори.</li>
+                        <li>Заклала фундамент для всіх наступних міжнародних стандартів інженерії.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">5</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 7: ISO/IEC 25010:2023 -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>ISO/IEC 25010:2023 — Сучасна модель якості</h2>
+            </div>
+            <div class="content">
+                <h3 class="section-title">Модель якості продукту (9 характеристик):</h3>
+                <div class="iso-characteristics">
+                    <div class="characteristic">
+                        <div class="characteristic-title">1. Функціональна придатність</div>
+                        <ul>
+                            <li>Повнота</li>
+                            <li>Коректність</li>
+                            <li>Відповідність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">2. Ефективність виконання</div>
+                        <ul>
+                            <li>Часова поведінка</li>
+                            <li>Ресурси</li>
+                            <li>Ємність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">3. Сумісність</div>
+                        <ul>
+                            <li>Співіснування</li>
+                            <li>Сумісність взаємодії</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">4. Здатність до взаємодії 🆕</div>
+                        <ul>
+                            <li>Керованість</li>
+                            <li>Залучення</li>
+                            <li>Інклюзивність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">5. Надійність</div>
+                        <ul>
+                            <li>Безпомилковість</li>
+                            <li>Відмовостійкість</li>
+                            <li>Відновлюваність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">6. Безпека (Security)</div>
+                        <ul>
+                            <li>Конфіденційність</li>
+                            <li>Цілісність</li>
+                            <li>Стійкість до атак</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">7. Супроводжуваність</div>
+                        <ul>
+                            <li>Модульність</li>
+                            <li>Аналізованість</li>
+                            <li>Змінюваність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">8. Гнучкість 🆕</div>
+                        <ul>
+                            <li>Адаптованість</li>
+                            <li>Масштабованість</li>
+                            <li>Замінність</li>
+                        </ul>
+                    </div>
+                    <div class="characteristic">
+                        <div class="characteristic-title">9. Безпечність (Safety) 🆕</div>
+                        <ul>
+                            <li>Захист людей / бізнесу</li>
+                            <li>Безпечне відмовлення</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">6</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Класифікація метрик -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Класифікація метрик якості</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>За об'єктом вимірювання</h4>
+                        <ul>
+                            <li><strong>Метрики продукту</strong> — характеристики коду (складність, розмір)</li>
+                            <li><strong>Метрики процесу</strong> — ефективність розробки (швидкість, DORA metrics)</li>
+                            <li><strong>Метрики проєкту</strong> — управлінські показники (бюджет, термін)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>За способом отримання</h4>
+                        <ul>
+                            <li><strong>Прямі метрики</strong> — безпосереднє вимірювання (LOC, кількість дефектів)</li>
+                            <li><strong>Непрямі метрики</strong> — розраховані показники (щільність дефектів, складність
+                                McCabe)</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 class="section-title">Основні групи метрик:</h3>
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <strong>📏 Метрики розміру</strong>
+                        LOC, SLOC, Function Points
+                    </div>
+                    <div class="metric-item">
+                        <strong>🔀 Метрики складності</strong>
+                        Цикломатична складність, Halstead
+                    </div>
+                    <div class="metric-item">
+                        <strong>🔗 Метрики структури</strong>
+                        Coupling (зв'язаність), Cohesion
+                    </div>
+                    <div class="metric-item">
+                        <strong>⚡ Метрики надійності</strong>
+                        MTTF, MTBF, Availability
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">7</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: Граф потоку керування -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Граф потоку керування (Control Flow Graph)</h2>
+            </div>
+            <div class="content">
+                <p class="intro-text"><strong>CFG</strong> — це візуальне представлення всіх можливих маршрутів
+                    виконання програми. Він є основою для точного математичного розрахунку цикломатичної складності.</p>
+
+                <div class="two-columns push-down">
+                    <div class="box">
+                        <h4>1. Вихідний код та Граф</h4>
+                        <pre style="margin-top: 10px; margin-bottom: 10px;"><code class="language-javascript">function checkNumber(a) {
+  // [1]
+  if (a > 0) { 
+      return "Pos"; // [2]
+  } else {
+      return "Neg"; // [3]
+  }
+  // [4] Exit
+}</code></pre>
+
+                        <!-- Вбудований SVG Граф -->
+                        <div style="text-align: center; margin-top: 10px;">
+                            <svg width="100%" height="160" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6"
+                                        markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#00828A" />
+                                    </marker>
+                                </defs>
+
+                                <!-- Вузли -->
+                                <circle cx="150" cy="20" r="16" fill="#00828A" />
+                                <text x="150" y="25" fill="white" font-size="14" text-anchor="middle" font-weight="bold"
+                                    font-family="sans-serif">1</text>
+
+                                <circle cx="80" cy="80" r="16" fill="#00828A" />
+                                <text x="80" y="85" fill="white" font-size="14" text-anchor="middle" font-weight="bold"
+                                    font-family="sans-serif">2</text>
+
+                                <circle cx="220" cy="80" r="16" fill="#00828A" />
+                                <text x="220" y="85" fill="white" font-size="14" text-anchor="middle" font-weight="bold"
+                                    font-family="sans-serif">3</text>
+
+                                <circle cx="150" cy="140" r="16" fill="#00828A" />
+                                <text x="150" y="145" fill="white" font-size="14" text-anchor="middle"
+                                    font-weight="bold" font-family="sans-serif">4</text>
+
+                                <!-- Ребра -->
+                                <!-- 1 -> 2 -->
+                                <line x1="138" y1="31" x2="92" y2="69" stroke="#00828A" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+                                <text x="105" y="45" fill="#2E7D32" font-size="12" font-weight="bold"
+                                    font-family="sans-serif">True</text>
+
+                                <!-- 1 -> 3 -->
+                                <line x1="162" y1="31" x2="208" y2="69" stroke="#00828A" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+                                <text x="195" y="45" fill="#C62828" font-size="12" font-weight="bold"
+                                    font-family="sans-serif">False</text>
+
+                                <!-- 2 -> 4 -->
+                                <line x1="92" y1="91" x2="138" y2="129" stroke="#00828A" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+
+                                <!-- 3 -> 4 -->
+                                <line x1="208" y1="91" x2="162" y2="129" stroke="#00828A" stroke-width="2"
+                                    marker-end="url(#arrow)" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="box light-blue-box">
+                        <h4 class="blue-text">2. Аналіз та розрахунок</h4>
+                        <ul class="standard-list">
+                            <li><strong>Вузли (N) = 4</strong> <br><span
+                                    style="font-size: 0.85em; color: var(--text-muted);">(Блоки коду, що виконуються
+                                    послідовно)</span></li>
+                            <li><strong>Ребра (E) = 4</strong> <br><span
+                                    style="font-size: 0.85em; color: var(--text-muted);">(Стрілки переходів між
+                                    вузлами)</span></li>
+                        </ul>
+
+                        <h3 class="section-title" style="margin-top: 25px;">Фундаментальна формула:</h3>
+                        <div class="formula" style="border-color: #1976D2; padding: 15px;">
+                            V(G) = E - N + 2P
+                        </div>
+                        <p style="text-align: center; margin-top: 10px; font-size: 1.1em;">
+                            V(G) = 4 - 4 + 2(1) = <strong>2</strong>
+                        </p>
+                        <p style="text-align: center; font-size: 0.85em; color: var(--text-muted); margin-top: 5px;">
+                            *P = 1, оскільки ми аналізуємо одну цілісну функцію
+                        </p>
+
+                        <div class="box success-box tight-box" style="margin-top: 20px;">
+                            <p style="font-size: 0.9em; margin-bottom: 0;">
+                                <strong>Перевірка спрощеною формулою:</strong><br>
+                                1 предикат (<code>if</code>) + 1 = <strong>2</strong>.<br>Результати абсолютно
+                                збігаються!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">9</span> / <span class="total">24</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 10: Цикломатична складність -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Цикломатична складність (McCabe, 1976)</h2>
+            </div>
+            <div class="content">
+                <div class="box full-width-box">
+                    <h4>Визначення</h4>
+                    <p>Вимірює кількість лінійно незалежних шляхів виконання коду. Прямо вказує на мінімальну кількість
+                        Unit-тестів для 100% покриття гілок.</p>
+                </div>
+
+                <div class="two-columns push-down">
+                    <div>
+                        <h3 class="section-title no-margin-top">Формула:</h3>
+                        <div class="formula">
+                            V(G) = π + 1
+                        </div>
+                        <p class="formula-desc" style="text-align: left;">
+                            де π — кількість предикатів (точок розгалуження: <code>if</code>, <code>for</code>,
+                            <code>while</code>, <code>case</code>, <code>&&</code>, <code>||</code>, <code>?:</code>)
+                        </p>
+                    </div>
+                    <div class="light-blue-box" style="padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #1976D2; margin-bottom: 10px;">Приклад підрахунку:</h4>
+                        <pre style="margin-bottom: 0;"><code class="language-javascript">function check(a, b) {
+  if (a > 0) {       // +1
+    while (b > 0) {  // +1
+      b--;
+    }
+  }
+} // V(G) = 2 + 1 = 3</code></pre>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Інтерпретація значень:</h3>
+                <table class="data-table">
+                    <tr>
+                        <th>Значення V(G)</th>
+                        <th>Оцінка складності</th>
+                        <th>Рішення (Рефакторинг)</th>
+                    </tr>
+                    <tr>
+                        <td>1 - 10</td>
+                        <td>Простий лінійний код</td>
+                        <td class="status-good">Норма</td>
+                    </tr>
+                    <tr>
+                        <td>11 - 20</td>
+                        <td>Помірна складність</td>
+                        <td class="status-warning">Потребує уваги</td>
+                    </tr>
+                    <tr>
+                        <td>21 - 50</td>
+                        <td>Складний код</td>
+                        <td class="status-critical">Обов'язковий рефакторинг</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">8</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 11: Зв'язаність та зчеплення -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Архітектурні метрики (Coupling & Cohesion)</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Зв'язаність (Coupling) ⬇️ Мінімізуємо</h4>
+                        <p class="box-desc"><em>Взаємозалежність між різними модулями.</em></p>
+                        <ul class="standard-list">
+                            <li><strong style="color: #C62828">Погано (Content Coupling):</strong> Модуль А
+                                безпосередньо змінює приватну змінну Модуля Б (напр. через Reflection).</li>
+                            <li><strong style="color: #F57C00">Середньо (Control Coupling):</strong> Передача
+                                boolean-прапорців, що змінюють логіку іншого модуля.</li>
+                            <li><strong style="color: #2E7D32">Добре (Data Coupling):</strong> Передача лише необхідних
+                                примітивних даних (напр. <code>calc(int a, int b)</code>).</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>Зчеплення (Cohesion) ⬆️ Максимізуємо</h4>
+                        <p class="box-desc"><em>Спорідненість функцій всередині одного модуля.</em></p>
+                        <ul class="standard-list">
+                            <li><strong style="color: #C62828">Погано (Логічне):</strong>
+                                <code>Utils.processEverything()</code> — звалено все підряд.
+                            </li>
+                            <li><strong style="color: #F57C00">Середньо (Часове):</strong> Функції згруповані лише тому,
+                                що виконуються разом (напр. <code>initDBAndLoadConfig()</code>).</li>
+                            <li><strong style="color: #2E7D32">Добре (Функціональне):</strong>
+                                <code>Math.calculateTax()</code> — виконує строго одну чітку задачу (відповідає SRP).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box target-box">
+                    <h4>🎯 Золоте правило архітектури</h4>
+                    <p class="target-text">Низька зв'язаність (Low Coupling) + Високе зчеплення (High Cohesion)</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">9</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: Метрики надійності -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Метрики надійності ПЗ</h2>
+            </div>
+            <div class="content">
+                <div class="metric-grid-2x2">
+                    <div class="metric-item">
+                        <strong>Щільність дефектів (DD)</strong>
+                        <div class="formula">DD = Кількість дефектів / KLOC</div>
+                        <p class="metric-desc">Типові значення: 1-25 дефектів на тисячу рядків коду.</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>MTTF (Mean Time To Failure)</strong>
+                        <div class="formula">MTTF = Загальний час / Кількість відмов</div>
+                        <p class="metric-desc">Середній час безперебійної роботи (як довго система живе до падіння).</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>MTBF (Mean Time Between Failures)</strong>
+                        <div class="formula">MTBF = MTTF + MTTR</div>
+                        <p class="metric-desc">MTTR — середній час відновлення (ремонту) після інциденту.</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>Коефіцієнт готовності (Availability)</strong>
+                        <div class="formula">A = MTTF / (MTTF + MTTR) × 100%</div>
+                        <p class="metric-desc">Частка часу, коли система доступна (напр., "Три дев'ятки" = 99.9%).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">10</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 13: Code Coverage -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Метрики тестового покриття (Coverage)</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>Statement Coverage (Покриття інструкцій)</h4>
+                        <p class="box-desc">Відсоток рядків коду, що були виконані хоча б раз під час тестів. Найслабша
+                            метрика.</p>
+                    </div>
+                    <div class="box">
+                        <h4>Branch Coverage (Покриття гілок)</h4>
+                        <p class="box-desc">Перевіряє обидва результати (True та False) для кожної умови
+                            <code>if/else</code>. Стандарт для Enterprise CI/CD (мінімум 80%).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="box light-orange-box push-down" style="padding: 20px;">
+                    <h4 style="color: #F57C00; margin-bottom: 10px;">Приклад: Condition Coverage (Покриття умов)</h4>
+                    <p style="font-size: 0.95em;">Маємо код: <code>if (user.isActive && user.hasBalance) { ... }</code>
+                    </p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Щоб досягти 100% Condition Coverage, недостатньо
+                        протестувати загальний `true` і `false`. Необхідно протестувати комбінації кожного операнда:</p>
+                    <ul style="font-size: 0.85em; margin-top: 5px;">
+                        <li>✅ <code>true && true</code></li>
+                        <li>✅ <code>true && false</code></li>
+                        <li>✅ <code>false && true</code></li>
+                        <li>✅ <code>false && false</code></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">11</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 14: Технічний борг -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Технічний борг (Technical Debt)</h2>
+            </div>
+            <div class="content">
+                <div class="box full-width-box tight-box">
+                    <p><strong>Визначення:</strong> Накопичена вартість відкладених завдань з рефакторингу або
+                        виправлення субоптимальних (але тимчасово працюючих) рішень.</p>
+                </div>
+
+                <div class="two-columns push-down">
+                    <div class="box warning-box">
+                        <h4>⚠️ Як виникає борг? (Приклад)</h4>
+                        <p class="box-desc">Розробник ігнорує попередження SonarQube про дублювання коду, щоб встигнути
+                            до релізу в п'ятницю. Код працює, але через місяць зміна бізнес-логіки вимагає правити код у
+                            5 різних місцях. В одному місці забувають — стається критичний баг.</p>
+                    </div>
+                    <div>
+                        <h3 class="section-title no-margin-top">Фінансовий показник:</h3>
+                        <div class="formula">
+                            TDR = Вартість виправлення / Вартість розробки
+                        </div>
+                        <p class="formula-desc">Критичний поріг (Quality Gate): ≤ 5%</p>
+
+                        <div class="box success-box tight-box push-down">
+                            <h4>✓ Стратегії виплати</h4>
+                            <ul class="smell-list">
+                                <li>Жорсткі правила Linter.</li>
+                                <li>Обов'язкове Code Review.</li>
+                                <li>Виділення 20% ємності спринту на тех. таски.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">12</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 15: ISO/IEC 25000 SQuaRE -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Сімейство стандартів SQuaRE</h2>
+            </div>
+            <div class="content">
+                <div class="box full-width-box">
+                    <h4>ISO/IEC 25000: Software Product Quality Requirements and Evaluation</h4>
+                    <p>Комплексний набір стандартів для формулювання вимог та оцінювання ПЗ.</p>
+                </div>
+                <h3 class="section-title">Структура сімейства:</h3>
+                <div class="square-grid">
+                    <div class="box square-item border-color-1">
+                        <strong>ISO/IEC 2500n</strong>
+                        <p>Управління якістю</p>
+                    </div>
+                    <div class="box square-item border-color-2">
+                        <strong>ISO/IEC 2501n</strong>
+                        <p>Моделі якості (25010, 25012)</p>
+                    </div>
+                    <div class="box square-item border-color-3">
+                        <strong>ISO/IEC 2502n</strong>
+                        <p>Вимірювання (Метрики)</p>
+                    </div>
+                    <div class="box square-item border-color-4">
+                        <strong>ISO/IEC 2503n</strong>
+                        <p>Формулювання вимог</p>
+                    </div>
+                    <div class="box square-item border-color-5">
+                        <strong>ISO/IEC 2504n</strong>
+                        <p>Процедури оцінювання</p>
+                    </div>
+                    <div class="box square-item border-color-6">
+                        <strong>ISO/IEC 2505n</strong>
+                        <p>Додаткові розширення</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">13</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 16: CMMI Overview -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>CMMI — Модель зрілості процесів</h2>
+            </div>
+            <div class="content">
+                <div class="box full-width-box tight-box">
+                    <p><strong>Capability Maturity Model Integration:</strong> Атестація та покращення процесів розробки
+                        ПЗ на рівні всієї компанії (організаційна зрілість).</p>
+                </div>
+                <h3 class="section-title">П'ять рівнів зрілості організації:</h3>
+                <div class="cmmi-levels">
+                    <div class="level op-70">
+                        <div class="level-number">1</div>
+                        <div>
+                            <strong>Початковий (Initial)</strong>
+                            <p>Героїзм окремих розробників. Хаос у процесах. Відсутність стандартів.</p>
+                        </div>
+                    </div>
+                    <div class="level op-80">
+                        <div class="level-number">2</div>
+                        <div>
+                            <strong>Керований (Managed)</strong>
+                            <p>Є базове планування, управління вимогами та версіями (Git). Процеси повторювані.</p>
+                        </div>
+                    </div>
+                    <div class="level op-85">
+                        <div class="level-number">3</div>
+                        <div>
+                            <strong>Визначений (Defined)</strong>
+                            <p>Єдині стандарти для всієї компанії. Документовані архітектурні практики.</p>
+                        </div>
+                    </div>
+                    <div class="level op-90">
+                        <div class="level-number">4</div>
+                        <div>
+                            <strong>Кількісно керований (Quantitatively Managed)</strong>
+                            <p>Процеси суворо вимірюються (метрики). Статистичний контроль відхилень.</p>
+                        </div>
+                    </div>
+                    <div class="level op-100">
+                        <div class="level-number">5</div>
+                        <div>
+                            <strong>Оптимізований (Optimizing)</strong>
+                            <p>Безперервне інноваційне вдосконалення та R&D. Адаптація до змін ринку.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">14</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 17: Інші стандарти -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Специфічні та галузеві стандарти якості</h2>
+            </div>
+            <div class="content">
+                <h3 class="section-title no-margin-top">Стандарти IEEE:</h3>
+                <div class="metric-grid-2x2">
+                    <div class="metric-item">
+                        <strong>IEEE 730</strong>
+                        Software Quality Assurance Plans
+                        <p class="metric-desc">Планування процесів QA</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>IEEE 829</strong>
+                        Software Test Documentation
+                        <p class="metric-desc">Вимоги до тестової документації</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>IEEE 1012</strong>
+                        Software V&V
+                        <p class="metric-desc">Верифікація та валідація ПЗ</p>
+                    </div>
+                    <div class="metric-item">
+                        <strong>ISO 9001</strong>
+                        Quality Management System
+                        <p class="metric-desc">Загальна система менеджменту</p>
+                    </div>
+                </div>
+                <h3 class="section-title">Галузеві та критичні стандарти (Safety-Critical):</h3>
+                <div class="two-columns">
+                    <div class="box light-blue-box">
+                        <h4 class="blue-text">✈️ DO-178C</h4>
+                        <p>Стандарт для авіаційного ПЗ</p>
+                        <ul class="standard-list">
+                            <li>100% структурне покриття.</li>
+                            <li>Абсолютна відмовостійкість.</li>
+                        </ul>
+                    </div>
+                    <div class="box light-orange-box">
+                        <h4 class="orange-text">⚡ IEC 61508</h4>
+                        <p>Функціональна безпека систем</p>
+                        <ul class="standard-list">
+                            <li>Промислові та медичні системи.</li>
+                            <li>Рівні цілісності безпеки (SIL).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">15</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 18: Інструменти автоматизації (CI/CD) -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Інструментарій якості в CI/CD</h2>
+            </div>
+            <div class="content">
+                <p class="intro-text">Сучасна інженерія базується на безперервному автоматизованому контролі (Continuous
+                    Inspection) у пайплайнах GitHub Actions, GitLab CI тощо.</p>
+                <div class="two-columns">
+                    <div class="box">
+                        <h4>📊 Статичний аналіз (SAST)</h4>
+                        <p class="box-desc">Аналіз коду без його виконання на наявність вразливостей, code smells та
+                            складності.</p>
+                        <ul class="standard-list">
+                            <li><strong>Комплексні:</strong> SonarQube, CodeClimate</li>
+                            <li><strong>Лінтери:</strong> ESLint (JS), Pylint (Python)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>🛡️ Динамічний аналіз (DAST/SCA)</h4>
+                        <p class="box-desc">Безпекове тестування та аналіз сторонніх залежностей.</p>
+                        <ul class="standard-list">
+                            <li><strong>SCA:</strong> Snyk, Dependabot</li>
+                            <li><strong>DAST:</strong> OWASP ZAP, Burp Suite</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>🤖 Автоматизовані тести</h4>
+                        <p class="box-desc">Захист від регресій при інтеграції.</p>
+                        <ul class="standard-list">
+                            <li><strong>Unit/Coverage:</strong> Jest, PyTest, JaCoCo</li>
+                            <li><strong>E2E (Інтерфейс):</strong> Cypress, Playwright</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>⚡ Навантажувальне тестування</h4>
+                        <p class="box-desc">Оцінка ефективності виконання та ресурсоємності.</p>
+                        <ul class="standard-list">
+                            <li><strong>Класика:</strong> Apache JMeter</li>
+                            <li><strong>Для CI/CD:</strong> k6 (Grafana), Gatling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">16</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 19: Практичний приклад (Вихідний код) -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Практика: Аналіз вихідного коду</h2>
+            </div>
+            <div class="content">
+                <div class="box full-width-box tight-box" style="margin-bottom: 10px;">
+                    <p>Функція для розрахунку знижок <strong>(До рефакторингу)</strong>:</p>
+                </div>
+
+                <pre style="margin: 0;"><code class="language-javascript">function calculateDiscount(price, type, isMember) {
+    if (price > 0) {
+        if (type === 'student') {
+            price *= 0.9;
+        } else if (type === 'veteran') {
+            price *= 0.85;
+        } else if (isMember) {
+            if (price > 1000) { price *= 0.8; } 
+            else { price *= 0.9; }
+        }
+    }
+    return price;
+}</code></pre>
+
+                <p style="margin-top: 15px; font-size: 1.1em;"><strong>Проблеми:</strong> Глибока вкладеність (Nesting
+                    Depth = 4). Погане читання коду. Змішана логіка.</p>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">17</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 20: Практичний приклад (Детальний розрахунок 1) -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Практика: Розрахунок метрик (До рефакторингу)</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box bg-red-light">
+                        <h4>1. Цикломатична складність McCabe</h4>
+                        <p style="margin-bottom: 10px;">Рахуємо предикати (умови):</p>
+                        <ol style="font-size: 0.9em; padding-left: 20px;">
+                            <li><code>if (price > 0)</code></li>
+                            <li><code>if (type === 'student')</code></li>
+                            <li><code>else if (type === 'veteran')</code></li>
+                            <li><code>else if (isMember)</code></li>
+                            <li><code>if (price > 1000)</code></li>
+                        </ol>
+                        <div class="formula" style="padding: 10px; margin-top: 10px;">
+                            V(G) = 5 + 1 = <strong>6</strong>
+                        </div>
+                    </div>
+
+                    <div class="box bg-orange-light">
+                        <h4>2. Лексичні метрики Halstead</h4>
+                        <ul style="font-size: 0.9em;">
+                            <li><strong>Унікальні оператори (n<sub>1</sub>):</strong> 10 <em>(if, else, ===, >, *=,
+                                    return, {}, (), ,, function)</em></li>
+                            <li><strong>Унікальні операнди (n<sub>2</sub>):</strong> 11 <em>(price, type, isMember,
+                                    'student', 0.9...)</em></li>
+                        </ul>
+                        <div class="formula" style="padding: 10px; margin-top: 10px; text-align: left; font-size: 1em;">
+                            Словник (n) = 10 + 11 = 21<br>
+                            Довжина (N) = 25 + 20 = 45<br>
+                            <strong>Зусилля (Effort, E) &approx; 1796</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">18</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 21: Практичний приклад (Рефакторинг) -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Практика: Рефакторинг коду</h2>
+            </div>
+            <div class="content">
+                <div class="box full-width-box tight-box" style="margin-bottom: 10px;">
+                    <p>Застосовуємо патерни <strong>Early Return</strong> (Раннє повернення),
+                        <strong>Dictionary</strong> (Словник) та виносимо логіку калькуляції в окрему функцію (SRP).
+                    </p>
+                </div>
+
+                <pre style="margin: 0;"><code class="language-javascript">function applyDiscount(price, rate) { 
+    return price * rate; 
+}
+
+function calculateDiscount(price, type, isMember) {
+    if (price <= 0) return price;
+    
+    const discounts = { student: 0.9, veteran: 0.85 };
+    if (discounts[type]) {
+        return applyDiscount(price, discounts[type]);
+    }
+    
+    if (isMember) {
+        return applyDiscount(price, price > 1000 ? 0.8 : 0.9);
+    }
+    
+    return price;
+}</code></pre>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">19</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 22: Практичний приклад (Детальний розрахунок 2) -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Практика: Розрахунок метрик (Після рефакторингу)</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div class="box success-box">
+                        <h4>1. Цикломатична складність McCabe</h4>
+                        <p style="margin-bottom: 10px;">Рахуємо предикати у <code>calculateDiscount</code>:</p>
+                        <ol style="font-size: 0.9em; padding-left: 20px;">
+                            <li><code>if (price <= 0)</code></li>
+                            <li><code>if (discounts[type])</code></li>
+                            <li><code>if (isMember)</code></li>
+                            <li><code>price > 1000 ? ... : ...</code> <em>(Тернарний оператор = розгалуження)</em></li>
+                        </ol>
+                        <div class="formula" style="padding: 10px; margin-top: 10px; color: #2E7D32;">
+                            V(G) = 4 + 1 = <strong>5</strong>
+                        </div>
+                    </div>
+
+                    <div class="box warning-box">
+                        <h4>2. Лексичні метрики Halstead</h4>
+                        <ul style="font-size: 0.9em;">
+                            <li><strong>Унікальні оператори (n<sub>1</sub>):</strong> 13 <em>(додався const, об'єкт {},
+                                    масив [])</em></li>
+                            <li><strong>Унікальні операнди (n<sub>2</sub>):</strong> 13 <em>(додався applyDiscount,
+                                    discounts)</em></li>
+                        </ul>
+                        <div class="formula" style="padding: 10px; margin-top: 10px; text-align: left; font-size: 1em;">
+                            Словник (n) = 13 + 13 = 26<br>
+                            Довжина (N) = 24 + 23 = 47<br>
+                            <strong>Зусилля (Effort, E) &approx; 2540</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">20</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 23: Порівняння -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Практика: Аналіз інженерного компромісу</h2>
+            </div>
+            <div class="content">
+                <table class="data-table push-down">
+                    <tr>
+                        <th style="width: 25%;">Метрика</th>
+                        <th>До рефакторингу</th>
+                        <th>Після рефакторингу</th>
+                        <th>Висновки</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Глибина вкладеності</strong></td>
+                        <td class="status-critical">4 (Дуже погано)</td>
+                        <td class="status-good">1 (Відмінно)</td>
+                        <td>Код став лінійним. Читабельність (Readability) зросла в рази.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>McCabe V(G)</strong></td>
+                        <td>6</td>
+                        <td class="status-good">5</td>
+                        <td>Кількість необхідних Unit-тестів для перевірки всіх шляхів зменшилась.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Зчеплення (Cohesion)</strong></td>
+                        <td>Логічне</td>
+                        <td class="status-good">Функціональне</td>
+                        <td>Досягнуто SRP (Single Responsibility Principle): <code>applyDiscount</code> лише рахує.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Halstead Effort (E)</strong></td>
+                        <td><strong>1796</strong></td>
+                        <td class="status-warning">2540</td>
+                        <td><strong>Trade-off:</strong> Словник зріс через абстракції. Це усвідомлений компроміс: ми
+                            пожертвували мінімальним обсягом заради ідеальної архітектури.</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">21</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 24: Висновки -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Висновки</h2>
+            </div>
+            <div class="content">
+                <div class="box full-width-box tight-box">
+                    <h4>🎯 Ключові положення</h4>
+                </div>
+
+                <div class="vertical-flex push-down">
+                    <div class="box full-width-box tight-box">
+                        <strong class="primary-text">1. Еволюція до багатовимірності</strong>
+                        <p class="metric-desc">Сучасний стандарт ISO/IEC 25010:2023 об'єднує 9 характеристик, акцентуючи
+                            увагу на кібербезпеці, гнучкості та безпечності.</p>
+                    </div>
+
+                    <div class="box full-width-box tight-box">
+                        <strong class="primary-text">2. Кількісне вимірювання (Метрики)</strong>
+                        <p class="metric-desc">Архітектурна якість — це не суб'єктивна оцінка. Цикломатична складність,
+                            покриття тестами та LCOM дають чіткі індикатори технічного боргу.</p>
+                    </div>
+
+                    <div class="box full-width-box tight-box">
+                        <strong class="primary-text">3. Золоте правило модульності</strong>
+                        <p class="metric-desc">Системи повинні проєктуватися за принципом: High Cohesion (високе
+                            зчеплення всередині) та Low Coupling (низька взаємозалежність).</p>
+                    </div>
+
+                    <div class="box full-width-box tight-box">
+                        <strong class="primary-text">4. Процесна зрілість та CI/CD</strong>
+                        <p class="metric-desc">Високий рівень за CMMI досягається інтеграцією інструментів
+                            SAST/SCA/Coverage у пайплайни з жорсткими Quality Gates.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">22</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn">Наступний →</button>
+            </div>
+        </div>
+
+        <!-- Slide 25: Питання та література -->
+        <div class="slide">
+            <img src="image_7f85ec.png" alt="КСУ ім. Б. Грінченка" class="university-logo">
+            <div class="slide-header">
+                <h2>Самоперевірка та література</h2>
+            </div>
+            <div class="content">
+                <div class="two-columns">
+                    <div>
+                        <h3 class="section-title no-margin-top">Питання для самоперевірки:</h3>
+                        <ul class="standard-list">
+                            <li>Що нового додано в ISO/IEC 25010:2023?</li>
+                            <li>Як McCabe V(G) корелює з тестуванням?</li>
+                            <li>Trade-off: Чому Halstead Effort може зрости при рефакторингу?</li>
+                            <li>Відмінність між Statement та Branch Coverage?</li>
+                            <li>Роль Quality Gates у SonarQube?</li>
+                            <li>Яким має бути ідеальний показник Cohesion?</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="section-title no-margin-top">Рекомендована література:</h3>
+                        <ul class="standard-list">
+                            <li><strong>ISO/IEC 25010:2023</strong> (Systems and software engineering — SQuaRE)</li>
+                            <li>Pressman R. — Software Engineering (9th ed.)</li>
+                            <li>Martin R.C. — Clean Architecture</li>
+                            <li><strong>CMMI</strong> for Development, Version 2.0</li>
+                            <li>IEEE 829 & DO-178C (Standards)</li>
+                        </ul>
+
+                        <div class="box primary-box push-down">
+                            <h4 class="white-text">Підготовка до ЛР</h4>
+                            <p class="box-desc white-text" style="margin-bottom: 8px;"><strong>ЛР 1:</strong> Огляд та аналіз стандартів якості ПЗ (ISO/IEC 25010, CMMI).</p>
+                            <p class="box-desc white-text" style="margin-bottom: 0;"><strong>ЛР 2-3:</strong> Практичне застосування метрик якості коду та рефакторинг.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box full-width-box center-text light-gray-bg push-down">
+                    <h4 class="primary-text large-text">Дякую за увагу!</h4>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn prevBtn">← Попередній</button>
+                <span class="slide-counter"><span class="current">23</span> / <span class="total">23</span></span>
+                <button class="btn nextBtn" disabled>Наступний →</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+    <!-- Ініціалізація підсвічування синтаксису -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+    </script>
+</body>
+
+</html>
